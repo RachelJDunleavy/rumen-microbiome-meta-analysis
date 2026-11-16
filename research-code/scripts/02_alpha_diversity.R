@@ -10,7 +10,9 @@ al <- d %>% mutate(Strategy_Group = droplevels(Strategy_Group)) %>%
   mutate(metric = factor(metric, levels = metric_lv, labels = metric_lab[metric_lv]),
          xpos = as.numeric(Strategy_Group) + ifelse(Label == "Control", -.2, .2),
          grp = interaction(Strategy_Group, Label))
-ncount <- d %>% mutate(Strategy_Group = droplevels(Strategy_Group)) %>%
+ncount <- d %>%
+  filter(if_all(c(shannon, observed, evenness), ~ !is.na(.x))) %>%
+  mutate(Strategy_Group = droplevels(Strategy_Group)) %>%
   count(Strategy_Group, Label) %>% pivot_wider(names_from = Label, values_from = n, values_fill = 0) %>%
   mutate(lbl = paste0(Treatment, " / ", Control), x = as.numeric(Strategy_Group))
 ncount <- merge(ncount, data.frame(metric = factor(metric_lab, levels = metric_lab)))
