@@ -37,7 +37,12 @@ pcoa_panel <- function(df, ncol = 3) {
   hulls <- df %>% group_by(Study, Label) %>% filter(n() >= 3) %>% slice(chull(PC1, PC2)) %>% ungroup()
   cent  <- df %>% group_by(Study, Label) %>% summarise(PC1 = mean(PC1), PC2 = mean(PC2), .groups = "drop")
   ggplot(df, aes(PC1, PC2, colour = Label, fill = Label)) +
-    geom_polygon(data = hulls, alpha = .08, linewidth = .4) +
+ geom_polygon(
+  data = hulls,
+  aes(group = interaction(Study, Label)),
+  alpha = .08,
+  linewidth = .4
+) +
     geom_point(aes(shape = Label), size = 1.3, alpha = .8) +
     geom_point(data = cent, shape = 21, size = 3.2, colour = "black") +
     facet_wrap(~ Study, scales = "free", ncol = ncol) +
