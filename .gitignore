@@ -48,3 +48,13 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Rumen microbiome research data and outputs
+inputs/
+Figures/
+Tables/
+
+# QIIME 2 artifacts
+*.qza
+*.qzv
+
