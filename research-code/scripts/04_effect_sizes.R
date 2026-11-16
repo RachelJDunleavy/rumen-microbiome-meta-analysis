@@ -30,4 +30,3 @@ es_l <- lapply(es_l, function(e) {
 stopifnot(identical(es_l$shannon$Study, es_l$observed$Study))
 write.csv(bind_rows(es_l), "Tables/effect_sizes_RMD.csv", row.names = FALSE)
 es <- es_l$shannon                                    # row order shared by all panels
-#This repository contains R scripts extracted from an ongoing rumen microbiome meta-analysis workflow. The scripts are being reviewed for reproducibility, including metadata harmonization, treatment-control matching, statistical model assumptions, and dose-response analyses. The complete workflow has not yet been independently validated.
