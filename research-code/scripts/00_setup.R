@@ -35,7 +35,18 @@ read_qza_file <- function(pattern, inner) {
   if (is.na(f)) stop("No .qza matching '", pattern, "' in ", qza_dir,
                      "\nFiles found:\n", paste(list.files(qza_dir, recursive = TRUE), collapse = "\n"))
   td <- tempfile(); dir.create(td); unzip(f, exdir = td)
-  list.files(td, pattern = paste0("^", inner, "$"), recursive = TRUE, full.names = TRUE)[1]
+ matches <- list.files(
+  td,
+  pattern = paste0("^", inner, "$"),
+  recursive = TRUE,
+  full.names = TRUE
+)
+
+if (length(matches) == 0) {
+  stop("Expected file '", inner, "' not found inside QIIME artifact: ", f)
+}
+
+matches[1]
 }
 shannon  <- read.delim(read_qza_file("^shannon_vector\\.qza$", "alpha-diversity.tsv"), row.names = 1)
 evenness <- read.delim(read_qza_file("^evenness_vector\\.qza$", "alpha-diversity.tsv"), row.names = 1)
