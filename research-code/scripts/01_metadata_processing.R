@@ -1,7 +1,10 @@
 # Extracted from the archived USDA v2 workflow; see scripts/README.md.
 # ---- 2. Metadata ----
 md <- read_excel(meta_file, col_types = "text")
-md <- md[-1, ]                                   # drop the #q2:types row
+# Remove the QIIME 2 type row only when present.
+if (nrow(md) > 0 && any(md[1, ] == "#q2:types", na.rm = TRUE)) {
+  md <- md[-1, ]
+}                                 # drop the #q2:types row
 num <- function(x) suppressWarnings(as.numeric(x))
 md <- md %>%
   mutate(Dose = num(Dose),
