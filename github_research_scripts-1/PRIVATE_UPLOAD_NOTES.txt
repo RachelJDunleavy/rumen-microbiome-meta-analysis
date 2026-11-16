@@ -1,5 +1,0 @@
-Upload the scripts folder into your existing private repository. Do not upload this notes file unless desired. Add these ignore patterns to your existing .gitignore before working with local inputs: inputs/
-Figures/
-Tables/
-*.qza
-*.qzv
